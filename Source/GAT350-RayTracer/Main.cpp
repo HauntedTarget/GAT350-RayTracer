@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Renderer.h"
+#include "Random.h"
+#include "Ray.h"
 
 using namespace std;
 using namespace nc;
@@ -7,6 +9,8 @@ using namespace nc;
 int main(int argc, char* argv[])
 {
 	cout << "Hello World!\n";
+
+	Random::seedRandom(unsigned int(time(nullptr)));
 
 	Renderer m_renderer;
 	m_renderer.Initialize();
