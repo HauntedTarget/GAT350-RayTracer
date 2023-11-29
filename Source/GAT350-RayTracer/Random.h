@@ -6,21 +6,21 @@ namespace nc
 	{
 	public:
 
-		void seedRandom(unsigned int seed)
+		static void seedRandom(unsigned int seed)
 		{
-			srand(seed);
+			std::srand(seed);
 		}
 
-		float random01()
+		static float random01()
 		{
-			return rand() / float(RAND_MAX);
+			return std::rand() / float(RAND_MAX);
 		}
 
-		float random(float min, float max)
+		static float random(float min, float max)
 		{
-			if (min > max) swap(min, max);
+			if (min > max) std::swap(min, max);
 
-			return rand() / max + min;
+			return min + (max - min) * random01();
 		}
 	};
 }
