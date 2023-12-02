@@ -21,9 +21,10 @@ namespace nc
 				// create ray from camera
 				ray_t ray = m_camera->GetRay(point);
 
-					// cast ray into scene
-					// set color value from trace
-				Color::color3_t color = Trace(ray);
+				// cast ray into scene
+				// set color value from trace
+				raycastHit_t raycastHit;
+				Color::color3_t color = Trace(ray, 0, 100, raycastHit);
 
 				// draw color to canvas point (pixel)
 				canvas.DrawPoint(pixel, Color::color4_t(color, 1));
@@ -32,13 +33,43 @@ namespace nc
 		
 	}
 
-	nc::Color::color3_t Scene::Trace(const ray_t& ray)
+	nc::Color::color3_t Scene::Trace(const ray_t& ray, float minDistance, float maxDistance, raycastHit_t& raycastHit)
 	{
-		glm::vec3 direction = glm::normalize(ray.direction);
+		bool rayHit = false;
+		float closestDistance = maxDistance;
 
-		// set scene sky color
+		// check if scene objects are hit by the ray
+		for (auto &object : m_objects)
+		{
+			// when checking objects don't include objects farther than closest hit (starts at max distance)
+			if (object->Hit(ray, minDistance, closestDistance, raycastHit))
+			{
+				rayHit = true;
+				// set closest distance to the raycast hit distance (only hit objects closer than closest distance)
+				closestDistance = raycastHit.distance;
+			}
+		}
+
+		// if ray hit object, scatter (bounce) ray and check for next hit
+		if (rayHit)
+		{
+			ray_t scattered;
+			Color::color3_t color;
+
+			if (raycastHit.material->Scatter(ray, raycastHit, color, scattered))
+			{
+				return raycastHit.normal;
+			}
+			else
+			{
+				return Color::color3_t{ 0, 0, 0 };
+			}
+		}
+
+		// if ray not hit, return scene sky color
+		glm::vec3 direction = glm::normalize(ray.direction);
 		float t = (direction.y + 1) * 0.5f; // direction.y (-1 <-> 1) => (0 <-> 1)
-		Color::color3_t color = lerp(m_bottomColor, m_topColor, t);//<lerp between bottom and top color using t>
+		Color::color3_t color = lerp(m_bottomColor, m_topColor, t);
 
 		return color;
 	}

@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Material.h"
+#include "Sphere.h"
 
 using namespace std;
 using namespace nc;
@@ -31,6 +32,10 @@ int main(int argc, char* argv[])
 
 	// create material
 	auto material = std::make_shared<Lambertian>(Color::color3_t{ 0, 0, 1 });
+
+	// create objects -> add to scene
+	auto sphere = std::make_unique<Sphere>(glm::vec3{ 12, 10, 2 }, 5, material);
+	scene.AddObject(sphere);
 
 	bool quit = false;
 	while (!quit)
