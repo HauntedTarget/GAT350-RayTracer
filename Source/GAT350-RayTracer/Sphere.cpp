@@ -21,7 +21,7 @@ namespace nc
             if (t > minDistance && t < maxDistance)
             {
                 raycastHit.distance = t;
-                raycastHit.point = ray.At(t);
+                raycastHit.point = ray.GetPoint(t);
                 raycastHit.normal = (raycastHit.point - m_center) / m_radius;
 
                 raycastHit.material = GetMaterial();
@@ -32,7 +32,7 @@ namespace nc
             if (t > minDistance && t < maxDistance)
             {
                 raycastHit.distance = t;
-                raycastHit.point = ray.At(t);
+                raycastHit.point = ray.GetPoint(t);
                 raycastHit.normal = (raycastHit.point - m_center) / m_radius;
 
                 raycastHit.material = GetMaterial();
