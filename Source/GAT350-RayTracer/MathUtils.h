@@ -1,5 +1,6 @@
 #pragma once
 #include "glm/glm.hpp"
+#include "Random.h"
 
 namespace nc
 {
@@ -16,8 +17,25 @@ namespace nc
 			(v1.x * v2.y) - (v1.y * v2.x));
 	}
 
+	inline glm::vec3 randomInUnitSphere()
+	{
+		glm::vec3 point;
+
+		do
+		{
+			point = glm::vec3{ Random::random(-1, 1), Random::random(-1, 1), Random::random(-1, 1) };
+		} while (glm::length2(point) >= 1);
+
+		return point;
+	}
+
 	inline float dot(const glm::vec3& v1, const glm::vec3& v2)
 	{
 		return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
+	}
+
+	inline glm::vec3 reflect(const glm::vec3& v, const glm::vec3& n)
+	{
+		return v - 2.0f * dot(n, v) * n;
 	}
 }
