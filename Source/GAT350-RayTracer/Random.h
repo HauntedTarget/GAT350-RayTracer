@@ -27,9 +27,13 @@ namespace nc
 
 		inline glm::vec3 random(const glm::vec3& min, const glm::vec3& max)
 		{
-			if (min.length > max.length) std::swap(min, max);
+			glm::vec3 bufferVec = glm::vec3{ 0 };
 
-			return min + (max - min) * random01();
+			if (min.length > max.length) bufferVec = max + (min - max) * random01();
+
+			else bufferVec = min + (max - min) * random01();
+
+			return bufferVec;
 		}
 		inline glm::vec3 randomInUnitSphere()
 		{

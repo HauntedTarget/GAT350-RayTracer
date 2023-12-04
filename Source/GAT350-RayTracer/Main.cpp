@@ -20,9 +20,9 @@ int main(int argc, char* argv[])
 
 	Renderer m_renderer;
 	m_renderer.Initialize();
-	m_renderer.CreateWindow("Hello World", 400, 300);
+	m_renderer.CreateWindow("Hello World", 1280, 640);
 
-	Canvas canvas(400, 300, m_renderer);
+	Canvas canvas(1280, 640, m_renderer);
 
 	float aspectRatio = canvas.GetSize().x / (float)canvas.GetSize().y;
 	std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3{ 0, 0, 1 }, glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 }, 70.0f, aspectRatio);
@@ -33,9 +33,12 @@ int main(int argc, char* argv[])
 	// create material
 	auto material = std::make_shared<Lambertian>(Color::color3_t{ 0, 0, 1 });
 
-	// create objects -> add to scene
-	auto sphere = std::make_unique<Sphere>(glm::vec3{ 12, 10, 2 }, 5, material);
-	scene.AddObject(sphere);
+	for (int i = 0; i < 3; i++)
+	{
+		// create objects -> add to scene
+		auto sphere = std::make_unique<Sphere>(glm::vec3{ Random::random(-20, 20), Random::random(-20, 20), Random::random(-20, -50) }, 10, material);
+		scene.AddObject(std::move(sphere));
+	}
 
 	bool quit = false;
 	while (!quit)
