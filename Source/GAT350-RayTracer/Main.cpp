@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 	// create objects -> add to scene
 	for (int i = 0; i < 10; i++)
 	{
-		std::shared_ptr<Material> material = ((int)Random::random(0,1) == 1) ? std::dynamic_pointer_cast<Material>(lambertian) : std::dynamic_pointer_cast<Material>(metal);
+		std::shared_ptr<Material> material = ((int)Random::random(1,3) == 2) ? std::dynamic_pointer_cast<Material>(lambertian) : std::dynamic_pointer_cast<Material>(metal);
 		auto sphere = std::make_unique<Sphere>(glm::vec3{ Random::random(-20, 20), Random::random(-20, 20), Random::random(-20, -50) }, 10, material);
 		scene.AddObject(std::move(sphere));
 	}
