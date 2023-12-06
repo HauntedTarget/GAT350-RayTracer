@@ -2,6 +2,8 @@
 #include "glm/glm.hpp"
 #include "Random.h"
 
+#define FLT_EPSILON      1.192092896e-07F 
+
 namespace nc
 {
 	template <typename T>
@@ -37,5 +39,11 @@ namespace nc
 	inline glm::vec3 reflect(const glm::vec3& v, const glm::vec3& n)
 	{
 		return v - 2.0f * dot(n, v) * n;
+	}
+
+	inline bool approximately(float value1, float value2)
+	{
+		// check if the difference between the values is less than epsilon
+		return ((float)value2 - value1 < FLT_EPSILON);
 	}
 }
