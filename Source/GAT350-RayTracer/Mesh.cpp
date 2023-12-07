@@ -84,7 +84,7 @@ namespace nc
 			{
 				// add positions to vertices vector, face contains index into positions of the triangle
 				unsigned int index = face.mIndices[j];
-				m_vertices.push_back(positions[j]);
+				m_vertices.push_back(positions[index]);
 			}
 		}
 	}

@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 	auto lambertian2 = std::make_shared<Lambertian>(Color::color3_t{ 1, 0, 0 });
 	auto metal = std::make_shared<Metal>(Color::color3_t{ 1, 1, 1 }, 0.0f);
 
-	InitScene01(scene, canvas);
+	InitScene02(scene, canvas);
 
 	//// create objects -> add to scene
 	//for (int x = -1; x < 1; x++)
@@ -169,6 +169,6 @@ void InitScene02(Scene& scene, const Canvas& canvas)
 	scene.AddObject(std::move(plane));
 
 	auto mesh = std::make_unique<Mesh>(std::make_shared<Lambertian>(Color::color3_t{ 0, 0, 1 }));
-	mesh->Load("models/cube.obj", glm::vec3{ 0, 0.5f, 0 }, glm::vec3{ 0, 45, 0 });
+	mesh->Load("models/cube-1.obj", glm::vec3{ 0, 0.5f, 0 }, glm::vec3{ 0, 45, 0 });
 	scene.AddObject(std::move(mesh));
 }
